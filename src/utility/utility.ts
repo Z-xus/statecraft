@@ -7,18 +7,17 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function runSimulation(
-  cyRef: Cytoscape.Core,
+  cy: Cytoscape.Core,
   result: any,
 ): Promise<void> {
   return new Promise((resolve) => {
-    if (!cyRef.current) {
+    if (!cy) {
       resolve();
       return;
     }
 
     // Run test on the automaton
-    const cy = cyRef.current,
-      accept = result.accept,
+    const accept = result.accept,
       routes = result.routes;
 
     const sequences: any[] = [];

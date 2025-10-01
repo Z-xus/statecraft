@@ -108,7 +108,7 @@ export default function Home() {
     setAnimating(true);
     // Timeout to fix weird bug
     setTimeout(() => {
-      runSimulation(cyRef, result).then(() => {
+      runSimulation(cyRef.current, result).then(() => {
         setAnimating(false);
         setStringAccepted(result.accept);
       });
@@ -117,81 +117,79 @@ export default function Home() {
 
 
   return (
-    <div className="h-screen w-screen bg-white text-black"> {/* Ensuring the background is white and text is black */}
-      <div className="flex flex-col min-h-screen">
-        {/* Top input */}
-        <div className="p-4 bg-secondary">
-          <div className="flex gap-2 max-w-md mx-auto w-full">
-            <Input
-              placeholder="Enter regular expression..."
-              className="flex-1 text-black" // Setting text color to black for input
-              value={regex}
-              onChange={(e) => {
-                setRegex(e.target.value);
-              }}
-              disabled={isLoading || animating}
-            />
-            <Button
-
-              className="text-white"
-              onClick={handleRegex}
-              disabled={isLoading || animating || !regex.trim()}
-            >
-              <SendHorizontal className="h-6 w-6" />
-            </Button>
-
-          </div>
-        </div>
-
+    <div className="h-[calc(100vh-4rem)] w-screen bg-white text-black">
+      <div className="flex flex-col h-full">
         {/* Main content */}
-        <div className="flex flex-col lg:flex-row flex-1 p-4 gap-4 overflow-hidden">
+        <div className="flex flex-1 p-4 gap-4">
           {/* Left panel */}
-          <div className="w-full lg:w-1/3 flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-200px)] lg:max-h-[calc(100vh-136px)]">
-            {/* Symbols */}
+          <div className="w-1/3 flex flex-col gap-4 overflow-hidden">
             {automata ? (
-              <Symbols automata={automata} className="text-black border border-gray-300 shadow-md p-4 rounded-md" />
+              <>
+                <Symbols automata={automata} className="text-black border border-gray-300 shadow-md p-2 rounded-md flex-1" />
+                <TransitionsTable automata={automata} className="text-black border border-gray-300 shadow-md p-2 rounded-md flex-1" />
+                <StatesTableuDFA automata={automata} className="text-black border border-gray-300 shadow-md p-2 rounded-md flex-1" />
+                <StatesTablemDFA automata={automata} className="text-black border border-gray-300 shadow-md p-2 rounded-md flex-1" />
+              </>
             ) : (
-              <></>
-            )}
+              // Skeleton Loader
+              <div className="flex flex-col gap-4 animate-pulse">
+                {/* Symbols box */}
+                <div className="border border-gray-300 shadow-md rounded-md p-4">
+                  <div className="h-6 w-24 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-4 w-32 bg-gray-200 rounded"></div>
+                </div>
 
-            {/* Transitions table */}
-            {automata ? (
-              <TransitionsTable automata={automata} className="text-black border border-gray-300 shadow-md p-4 rounded-md" />
-            ) : (
-              <></>
-            )}
-
-            {/* States table of uDFA */}
-            {automata ? (
-              <StatesTableuDFA automata={automata} className="text-black border border-gray-300 shadow-md p-4 rounded-md" />
-            ) : (
-              <></>
-            )}
-
-            {/* States table of mDFA */}
-            {automata ? (
-              <StatesTablemDFA automata={automata} className="text-black border border-gray-300 shadow-md p-4 rounded-md" />
-            ) : (
-              <></>
+                {/* Transitions table */}
+                <div className="border border-gray-300 shadow-md rounded-md p-4">
+                  <div className="h-6 w-28 bg-gray-200 rounded mb-4"></div>
+                  <div className="space-y-2">
+                    {[...Array(5)].map((_, i) => (
+                      <div key={i} className="flex gap-4">
+                        <div className="h-4 w-10 bg-gray-200 rounded"></div>
+                        <div className="h-4 w-10 bg-gray-200 rounded"></div>
+                        <div className="h-4 w-10 bg-gray-200 rounded"></div>
+                        <div className="h-4 w-10 bg-gray-200 rounded"></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             )}
           </div>
 
           {/* Right panel */}
-          <div className="w-full lg:w-2/3 flex flex-col mt-4 lg:mt-0">
-            <Select value={selectValue} onValueChange={setSelectValue}>
-              <SelectTrigger className="w-full mb-4 text-black border border-gray-300 shadow-md p-2 rounded-md">
-                {/* Text set to black */}
-                <SelectValue placeholder="Select an option"></SelectValue>
-              </SelectTrigger>
-              <SelectContent className="text-black border border-gray-300 shadow-md rounded-md">
-                <SelectItem value="nfa">Nondeterministic Finite Automaton (NFA)</SelectItem>
-                <SelectItem value="udfa">Unoptimized Deterministic Finite Automaton (uDFA)</SelectItem>
-                <SelectItem value="mdfa">Minimised Deterministic Finite Automaton (mDFA)</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="w-2/3 flex flex-col">
+            <div className="flex items-center gap-x-5 mb-2">
+              <div className="flex gap-x-4 max-w-md w-full">
+                <Input
+                  placeholder="Enter regular expression..."
+                  className="flex-1 text-black border-black"
+                  value={regex}
+                  onChange={(e) => setRegex(e.target.value)}
+                  disabled={isLoading || animating}
+                />
+                <Button
+                  className="text-white"
+                  onClick={handleRegex}
+                  disabled={isLoading || animating || !regex.trim()}
+                >
+                  <SendHorizontal className="h-6 w-6" />
+                </Button>
+              </div>
+              <Select value={selectValue} onValueChange={setSelectValue}>
+                <SelectTrigger className="text-black border border-gray-300 shadow-md p-2 rounded-md flex-1">
+                  <SelectValue placeholder="Select an option" />
+                </SelectTrigger>
+                <SelectContent className="text-black border border-gray-300 shadow-md rounded-md">
+                  <SelectItem value="nfa">Nondeterministic Finite Automaton (NFA)</SelectItem>
+                  <SelectItem value="udfa">Unoptimized DFA (uDFA)</SelectItem>
+                  <SelectItem value="mdfa">Minimized DFA (mDFA)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
             {/* Graph */}
-            <div className="flex-1 bg-white rounded-lg shadow-lg border border-gray-300 mb-4 p-4 overflow-auto min-h-[500px] lg:min-h-0 relative">
+            <div className="flex-1 bg-white rounded-lg shadow-lg border border-gray-300 p-4 relative">
               {isLoading ? (
                 <div className="flex items-center justify-center h-full">
                   <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary"></div>
@@ -201,64 +199,62 @@ export default function Home() {
                   <CytoscapeComponent
                     id="automaton"
                     elements={automata.cytograph()}
-                    style={{ width: "100%", height: "100%" }}
+                    style={{ width: "100%", height: "90%" }}
                     stylesheet={cytoscape_styles}
                     layout={cytoscape_layout}
-                    cy={(cy: Cytoscape.Core) => {
-                      cyRef.current = cy;
-                    }}
+                    cy={(cy: Cytoscape.Core) => (cyRef.current = cy)}
                     boxSelectionEnabled={false}
                     minZoom={1}
                     maxZoom={4}
                     wheelSensitivity={0.1}
                   />
-                  <p className="absolute bottom-5 left-5 text-sm text-gray-500 select-none">
-                    In some cases, the edges may overlap. To fix this, just drag and drop the nodes until you see all of the edges.
+                  <p className="absolute bottom-2 left-2 text-xs text-gray-500 select-none">
+                    Drag nodes to resolve overlapping edges
                   </p>
                 </>
               ) : (
                 <div className="flex items-center justify-center h-full text-gray-500 select-none">
-                  Enter a regular expression on the top
+                  Enter a regular expression above
                 </div>
               )}
             </div>
 
             {/* Testing area */}
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex gap-2 mt-2">
               <div className="relative flex-1">
                 <Input
-                  placeholder="Enter a string to test with the automaton..."
+                  placeholder="Enter a string to test..."
                   value={testString}
                   onChange={(e) => {
                     setTestString(e.target.value);
                     setStringAccepted(null);
                   }}
                   disabled={isLoading || animating}
-                  className={`text-black border border-gray-300 shadow-md rounded-md p-2 ${stringAccepted === true
-                    ? "border-green-500 border-4"
-                    : stringAccepted === false
-                      ? "border-red-500 border-4"
-                      : ""
+                  className={`text-black border shadow-md rounded-md p-2 ${stringAccepted === true
+                      ? "border-green-500 border-4"
+                      : stringAccepted === false
+                        ? "border-red-500 border-4"
+                        : "border-gray-300"
                     }`}
                 />
                 {stringAccepted === true ? (
-                  <Check className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 text-green-500" />
+                  <Check className="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6 text-green-500" />
                 ) : stringAccepted === false ? (
-                  <X className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 text-red-500" />
+                  <X className="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6 text-red-500" />
                 ) : null}
               </div>
               <Button
                 onClick={handleTest}
                 disabled={isLoading || animating || !testString.trim()}
-                className="whitespace-nowrap text-white bg-primary shadow-lg border border-primary hover:bg-primary-dark rounded-md"
+                className="text-white bg-primary shadow-lg border border-primary hover:bg-primary-dark rounded-md"
               >
                 Test String
               </Button>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
+
 }

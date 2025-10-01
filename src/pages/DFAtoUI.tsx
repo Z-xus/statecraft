@@ -125,49 +125,53 @@ export default function DFAtoUI() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="h-screen w-screen flex bg-black text-white">
+    <div className="h-[calc(100vh-3rem)] w-screen flex bg-black text-white">
       {/* Floating Sidebar */}
       <div
-        className={`fixed left-0 top-0 h-screen bg-gray-900 transition-all duration-300 ease-in-out z-10 ${isOpen ? 'w-64 md:w-1/4' : 'w-2 hover:w-64 md:hover:w-1/4'
+        className={`fixed left-0 top-[4rem] h-screen bg-gray-900 transition-all duration-300 ease-in-out z-10 ${isOpen ? 'w-64 md:w-1/4' : 'w-2 hover:w-64 md:hover:w-1/4'
           }`}
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
         <div className={`p-5 ${isOpen ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 overflow-y-auto h-full`}>
-          <h2 className="text-lg font-semibold mb-4">Add a State:</h2>
+          <h2 className="text-lg font-semibold mb-2">Add a State:</h2>
           <NodeCreatorButton onAddNode={addNode} />
 
-          <h2 className="text-lg font-semibold mt-6">Add an Edge:</h2>
+          <h2 className="text-lg font-semibold mt-3">Add an Edge:</h2>
 
-          <h2 className="text-lg font-semibold mt-4">Select Start State:</h2>
-          <select
-            value={startState}
-            onChange={(e) => setStartState(e.target.value)}
-            className="w-full p-2 border border-gray-600 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="" disabled>Start state</option>
-            {nodes.map(node => (
-              <option key={node.id} value={node.id}>
-                {node.data.label} {node.data.isAcceptState ? "(Accept)" : ""}
-              </option>
-            ))}
-          </select>
+          <div className="flex items-center justify-between gap-4 mt-4">
+            <h2 className="text-lg font-semibold text-justify">Select Start State:</h2>
+            <select
+              value={startState}
+              onChange={(e) => setStartState(e.target.value)}
+              className="w-fit p-2 border border-gray-600 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="" disabled>Start state</option>
+              {nodes.map(node => (
+                <option key={node.id} value={node.id}>
+                  {node.data.label} {node.data.isAcceptState ? "(Accept)" : ""}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <h2 className="text-lg font-semibold mt-4">Select End State:</h2>
-          <select
-            value={endState}
-            onChange={(e) => setEndState(e.target.value)}
-            className="w-full p-2 border border-gray-600 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="" disabled>End state</option>
-            {nodes.map(node => (
-              <option key={node.id} value={node.id}>
-                {node.data.label} {node.data.isAcceptState ? "(Accept)" : ""}
-              </option>
-            ))}
-          </select>
+          <div className="flex items-center justify-between gap-4 mt-4">
+            <h2 className="text-lg font-semibold">Select End State:</h2>
+            <select
+              value={endState}
+              onChange={(e) => setEndState(e.target.value)}
+              className="w-fit p-2 border border-gray-600 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="" disabled>End state</option>
+              {nodes.map(node => (
+                <option key={node.id} value={node.id}>
+                  {node.data.label} {node.data.isAcceptState ? "(Accept)" : ""}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <h2 className="text-lg font-semibold mt-4">Enter Transition Symbol:</h2>
+          <h2 className="text-lg font-semibold mt-4 mb-1.5">Enter Transition Symbol:</h2>
           <input
             type="text"
             value={transitionSymbol}
@@ -176,21 +180,23 @@ export default function DFAtoUI() {
             className="w-full p-2 border border-gray-600 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
-          <button
-            onClick={() => handleAddEdge()}
-            className="mt-4 w-full p-2 bg-gray-600 rounded border-solid-white cursor-pointer text-white hover:bg-gray-500 transition-colors"
-          >
-            Add Edge
-          </button>
+          <div className="flex items-center justify-center gap-4 mt-4">
+            <button
+              onClick={() => handleAddEdge()}
+              className="w-full p-2 bg-gray-600 rounded border-solid-white cursor-pointer text-white hover:bg-gray-500 transition-colors"
+            >
+              Add Edge
+            </button>
 
-          <button
-            onClick={handleDeleteElements}
-            className="mt-4 w-full p-2 bg-gray-600 rounded border-solid-white cursor-pointer text-white hover:bg-gray-500 transition-colors"
-          >
-            Delete Elements
-          </button>
+            <button
+              onClick={handleDeleteElements}
+              className="w-full p-2 bg-gray-600 rounded border-solid-white cursor-pointer text-white hover:bg-gray-500 transition-colors"
+            >
+              Delete Elements
+            </button>
+          </div>
 
-          <h2 className="text-lg font-semibold mt-6">Validate String:</h2>
+          <h2 className="text-lg font-semibold mt-4 mb-1.5">Validate String:</h2>
           <input
             type="text"
             value={input}

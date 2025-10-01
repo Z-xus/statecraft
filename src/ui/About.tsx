@@ -22,8 +22,7 @@ const TeamMember = ({ name, role, image }) => (
 );
 const AboutPage = () => {
   return (
-    <div className="w-screen min-h-screen bg-gray-900 text-white">
-      <Navbar />
+    <div className="w-full min-h-screen bg-gray-900 text-white">
       <main className="pt-24 pb-12">
         <div className="container mx-auto px-4 max-w-4xl">
           <h1 className="text-5xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-blue-500">

@@ -124,12 +124,12 @@ export default function Home() {
           {/* Left panel */}
           <div className="w-1/3 flex flex-col gap-4 overflow-hidden">
             {automata ? (
-              <>
-                <Symbols automata={automata} className="text-black border border-gray-300 shadow-md p-2 rounded-md flex-1" />
+              <div className="max-h-[87vh] flex flex-col gap-2">
+                <Symbols automata={automata} className="text-black border border-gray-300 shadow-md p-2 rounded-md h-fit" />
                 <TransitionsTable automata={automata} className="text-black border border-gray-300 shadow-md p-2 rounded-md flex-1" />
                 <StatesTableuDFA automata={automata} className="text-black border border-gray-300 shadow-md p-2 rounded-md flex-1" />
                 <StatesTablemDFA automata={automata} className="text-black border border-gray-300 shadow-md p-2 rounded-md flex-1" />
-              </>
+              </div>
             ) : (
               // Skeleton Loader
               <div className="flex flex-col gap-4 animate-pulse">

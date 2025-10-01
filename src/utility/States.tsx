@@ -113,8 +113,8 @@ export function StatesTablemDFA({ automata }: StatesTableProps) {
           )}
         </TableBody>
       </Table>
-      <div>
-        <ul className="list-disc pl-10 space-y-2 mt-5">
+      <div className="h-2/4 overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: '#a0aec0 transparent' }}>
+        <ul className="list-disc pl-10 space-y-2 mt-5 ">
           {automata.identifiables.table && Array.from(automata.identifiables.table.entries()).map(
             ([label, identicals]) => (
               <li key={label} className="text-md">

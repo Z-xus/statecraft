@@ -6,7 +6,7 @@ const Layout: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div className="content" style={{ marginTop: '3rem' }}>
+      <div className="content w-[calc(100vw-15px)]" style={{ marginTop: '3rem' }}>
         <Outlet />
       </div>
     </>
@@ -16,4 +16,4 @@ const Layout: React.FC = () => {
 export default Layout;
 
 
-  // Adjust the import path to your Navbar
+// Adjust the import path to your Navbar

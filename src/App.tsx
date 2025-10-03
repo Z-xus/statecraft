@@ -133,9 +133,8 @@ export default function App() {
 
 function Home() {
   return (
-    <div className="min-h-screen bg-gray-900 text-white w-screen">
-      <Navbar />
-      <main className="w-screen">
+    <div className="min-h-screen bg-gray-900 text-white w-full">
+      <main className="w-full box-border overflow-x-hidden">
         <Hero />
         <Features />
         <CTA />

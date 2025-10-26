@@ -2,12 +2,15 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <nav className="bg-gray-900 py-3 fixed top-0 left-0 right-0 bg-opacity-90 backdrop-blur-md z-50 border-b border-gray-700 shadow-lg">
-      <div className="flex justify-between items-center max-w-6xl mx-auto px-6">
-        <Link to="/" className="text-4xl font-bold text-white tracking-wide transition-transform duration-300 hover:scale-110">
+    <nav className="bg-gray-900 py-3 fixed top-0 left-0 right-0 bg-opacity-90 backdrop-blur-md z-50 border-b border-gray-700 shadow-lg h-12">
+      <div className="flex justify-between items-center max-w-7xl mx-auto px-4 h-full">
+        <Link 
+          to="/" 
+          className="text-2xl md:text-3xl font-bold text-white tracking-wide hover:text-teal-400 transition-colors duration-300"
+        >
           StateCraft
         </Link>
-        <div className="flex gap-12">
+        <div className="flex gap-4 md:gap-8 lg:gap-12">
           <NavLink to="/">Home</NavLink>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/dfatoui">DFA From UI</NavLink>
@@ -21,11 +24,9 @@ const Navbar = () => {
 const NavLink = ({ to, children }) => (
   <Link
     to={to}
-    className="text-gray-300 text-lg relative transition-all duration-300 hover:text-teal-400 group"  // Added group class for hover effect
+    className="text-gray-300 text-sm md:text-base whitespace-nowrap hover:text-teal-400 transition-colors duration-300"
   >
     {children}
-    <span className="absolute block w-full h-[4px] bg-teal-500 left-0 bottom-[-6px] scale-x-0 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
-    <span className="absolute inset-0 w-full h-full transition-all duration-300 opacity-0 hover:opacity-20 bg-teal-400 rounded-md"></span> {/* Background hover effect */}
   </Link>
 );
 

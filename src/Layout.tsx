@@ -1,19 +1,16 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Navbar from './ui/Navbar';  // Import your Navbar
+import Navbar from './ui/Navbar';
 
 const Layout: React.FC = () => {
   return (
-    <>
+    <div className="w-full h-screen flex flex-col overflow-hidden">
       <Navbar />
-      <div className="content w-[calc(100vw-15px)]" style={{ marginTop: '3rem' }}>
+      <div className="flex-1 w-full overflow-hidden" style={{ marginTop: '3rem' }}>
         <Outlet />
       </div>
-    </>
+    </div>
   );
 };
 
 export default Layout;
-
-
-// Adjust the import path to your Navbar
